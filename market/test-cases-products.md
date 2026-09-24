@@ -240,7 +240,7 @@ Auth: `Authorization: {{apiKey}}` header на каждом запросе, ес�
 | # | Шаг | Ожидаемый результат |
 |---|---|---|
 | 1 | GET `/api/groceries/filter?temperature_zone=Warm` | `400 Bad Request`, `"error": "temperature_zone must be one of: Dry, Frozen, Chilled, Room Temperature"` |
-| 2 | Повторить с несколькими значениями через запятую, включая валидные (`temperature_zone=Chilled,Warm`) | `400 Bad Request` — множественные значения для temperature_zone не поддерживаются |
+| 2 | GET `/api/groceries/filter?temperature_zone=Chilled,Warm` | `400 Bad Request` |
 
 **Actual result:** соответствует ожиданию по обоим шагам.
 **Status:** Passed
@@ -263,7 +263,7 @@ Auth: `Authorization: {{apiKey}}` header на каждом запросе, ес�
 
 | # | Шаг | Ожидаемый результат |
 |---|---|---|
-| 1 | GET `/api/groceries/filter?category=!@#$` | `200 OK`, `[]` — category свободное поле, поэтому строгая валидация формата не требуется, а отсутствие совпадений — не ошибка |
+| 1 | GET `/api/groceries/filter?category=!@#$` | `200 OK`, `[]` |
 | 2 | GET `/api/groceries/filter?category=молоко` | Аналогично п.1 |
 | 3 | GET `/api/groceries/filter?category=asdkfj` | Аналогично п.1 |
 
@@ -706,5 +706,5 @@ Auth: `Authorization: {{apiKey}}` header на каждом запросе, ес�
 |---|---|---|---|
 | BUG-001 | POST и PUT /api/groceries принимают отрицательное значение price | Major | PROD-018, PROD-025 |
 | BUG-002 | Несогласованная валидация price = 0 между POST (400) и PUT (200) | Major | PROD-017, PROD-024 |
-| BUG-003 | Сообщение об ошибке при price = 0 вводит в заблуждение ("required" вместо "invalid") | Minor | PROD-017 |
-| BUG-004 | Категории из документации (Meat) не совпадают с фактическими сид-данными (meat-seafood) | Major | PROD-005, PROD-006 |
+| BUG-003 | Сообщение об ошибке при price = 0 вводит в заблуждение | Minor | PROD-017 |
+| BUG-004 | BUG-004 — Категория Meat, заявленная в документации, отсутствует в дефолтном каталоге | Major | PROD-005, PROD-006 |
