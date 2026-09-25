@@ -21,7 +21,7 @@
 | Basket | Add item | quantity = -1 / -2 (отрицательное) | Passed | 400 "quantity must be at least 1" | — | В отличие от quantity=0 — сообщение верное |
 | Basket | Add item | quantity нечисловое, в кавычках ("asf") | **Failed** | 400 с понятным сообщением | BUG-B02 | Факт: 500, сырая ошибка БД |
 | Basket | Add item | quantity спецсимволы без кавычек | **Failed** | 400, тело JSON | BUG-B02 | Факт: 400, но тело — HTML-страница |
-| Basket | Add item | Без поля quantity | **Failed** | 400, тело JSON | BUG-B03 | Факт: 400, тело — HTML |
+| Basket | Add item | Без поля quantity | **Failed** | 400, тело JSON | BUG-B02 | Факт: 400, тело — HTML |
 | Basket | Add item | Без тела запроса | Passed | 400 "product_id and quantity are required" | — | |
 | Basket | Add item | Без поля product_id | Passed | 400 "product_id and quantity are required" | — | |
 | Basket | Update quantity | Валидное новое значение | Passed | 200, quantity обновлён | — | BASK-007 |
