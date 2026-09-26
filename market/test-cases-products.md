@@ -127,7 +127,7 @@ Auth: `Authorization: {{apiKey}}` header на каждом запросе, ес�
 | 1 | GET `/api/groceries/filter?category=Dairy,Meat` | `200 OK`, возвращены товары категорий Dairy и Meat |
 
 **Actual result:** возвращён пустой список `[]`. Реальные категории в данных — `meat-seafood` и др. подкатегории, а не `Meat`.
-**Status:** **Failed** → см. BUG-004 
+**Status:** **Failed** → см. BUG-P04 
 
 ---
 
@@ -409,7 +409,7 @@ Auth: `Authorization: {{apiKey}}` header на каждом запросе, ес�
 | 1 | POST `/api/groceries` с `price: 0`, остальные поля валидны | `400 Bad Request` с сообщением, указывающим на некорректное значение price |
 
 **Actual result:** `400 Bad Request`, но текст ошибки `"product_name/name, price, and category are required"` вводит в заблуждение — поле `price` присутствует в запросе.
-**Status:** **Failed** → см. BUG-003
+**Status:** **Failed** → см. BUG-P03
 
 ---
 
@@ -432,7 +432,7 @@ Auth: `Authorization: {{apiKey}}` header на каждом запросе, ес�
 | 1 | POST `/api/groceries` с `price: -10`, остальные поля валидны | `400 Bad Request` — цена не может быть отрицательной |
 
 **Actual result:** `201 Created`, товар создан с `price: -10`. Подтверждено повторным GET по id.
-**Status:** **Failed** → см. BUG-001
+**Status:** **Failed** → см. BUG-P01
 
 ---
 
@@ -575,7 +575,7 @@ Auth: `Authorization: {{apiKey}}` header на каждом запросе, ес�
 | 1 | PUT `/api/groceries/:id` с `{"price": 0}` | По аналогии с POST (PROD-017) ожидается `400 Bad Request` |
 
 **Actual result:** `200 OK`, цена реально обновляется на 0 (подтверждено на UI и повторным GET).
-**Status:** **Failed** → см. BUG-002 
+**Status:** **Failed** → см. BUG-P02 
 
 ---
 
@@ -598,7 +598,7 @@ Auth: `Authorization: {{apiKey}}` header на каждом запросе, ес�
 | 1 | PUT `/api/groceries/:id` с `{"price": -24}` | `400 Bad Request` |
 
 **Actual result:** `200 OK`, товар обновлён с отрицательной ценой.
-**Status:** **Failed** → см. BUG-001 
+**Status:** **Failed** → см. BUG-P01 
 
 ---
 
@@ -704,7 +704,7 @@ Auth: `Authorization: {{apiKey}}` header на каждом запросе, ес�
 
 | ID | Заголовок | Severity | Связанные кейсы |
 |---|---|---|---|
-| BUG-001 | POST и PUT /api/groceries принимают отрицательное значение price | Major | PROD-018, PROD-025 |
-| BUG-002 | Несогласованная валидация price = 0 между POST (400) и PUT (200) | Major | PROD-017, PROD-024 |
-| BUG-003 | Сообщение об ошибке при price = 0 вводит в заблуждение | Minor | PROD-017 |
-| BUG-004 | BUG-004 — Категория Meat, заявленная в документации, отсутствует в дефолтном каталоге | Major | PROD-005, PROD-006 |
+| BUG-P01 | POST и PUT /api/groceries принимают отрицательное значение price | Major | PROD-018, PROD-025 |
+| BUG-P02 | Несогласованная валидация price = 0 между POST (400) и PUT (200) | Major | PROD-017, PROD-024 |
+| BUG-P03 | Сообщение об ошибке при price = 0 вводит в заблуждение | Minor | PROD-017 |
+| BUG-P04 | Категория Meat, заявленная в документации, отсутствует в дефолтном каталоге | Major | PROD-005, PROD-006 |
