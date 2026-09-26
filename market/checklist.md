@@ -38,3 +38,21 @@
 | Basket | Endpoints | Очистка всей корзины (`DELETE /api/basket/clear`) | Passed | 200, корзина пуста | — | Путь отличается от документированного |
 
 ---
+
+## Orders
+
+| Module | Submodule | Summary | Status | Expected Result | Defect | Notes |
+|---|---|---|---|---|---|---|
+| Orders | Place order | Заказ из непустой корзины | Passed | 201, order_number формата O+5 цифр, корзина очищается | — | ORD-001 |
+| Orders | Place order | Заказ из пустой корзины | Passed | 400 "Basket is empty" | — | |
+| Orders | Place order | total_amount = сумма (price × quantity) | Passed | Совпадает с расчётным значением | — | ORD-003 |
+| Orders | Place order | price_at_purchase не меняется после изменения цены товара | Passed | Значение остаётся снепшотом на момент заказа | — | ORD-004 |
+| Orders | Place order | Stock уменьшается после заказа | Passed | Новый stock = исходный − N | — | |
+| Orders | Update status | Невалидное значение статуса | Passed | 400, перечислены допустимые значения | — | |
+| Orders | Update status | Валидный статус, несуществующий (но валидный формат) id | Passed | 404 "Order not found" | — | |
+| Orders | Update status | Невалидный статус + невалидный id одновременно | Passed | 400 (валидация статуса раньше проверки id) | — | |
+| Orders | Format | order_number соответствует /^O\d{5}$/ | Passed | Формат соблюдается на нескольких заказах | — | |
+| Orders | Delete | Удаление заказа, сток не восстанавливается | Passed | Заказ удалён, сток не пополняется | — | Ожидаемое поведение, задокументировано платформой (Task 8) |
+| Orders | Delete | Невалидный (не-UUID) формат id | **Failed** | 400 с понятным сообщением | BUG-O01 | 500, сырая ошибка БД |
+
+---
