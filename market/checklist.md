@@ -54,3 +54,39 @@
 | Orders | Format | order_number соответствует /^O\d{5}$/ | Passed | Формат соблюдается на нескольких заказах | — | |
 | Orders | Delete | Удаление заказа, сток не восстанавливается | Passed | Заказ удалён, сток не пополняется | — | Ожидаемое поведение, задокументировано платформой (Task 8) |
 | Orders | Delete | Невалидный (не-UUID) формат id | **Failed** | 400 с понятным сообщением | BUG-O01 | 500, сырая ошибка БД |
+
+---
+
+## UI (Frontend)
+
+| Module | Submodule | Summary | Status | Expected Result | Defect | Notes |
+|---|---|---|---|---|---|---|
+| UI | Stats Dashboard | Счётчики после добавления товара (шапка vs "Basket Units") | Passed* | Шапка — по числу уникальных товаров, "Basket Units" — по сумме quantity | BUG-UI-01 | *Поведение корректно, но формулировка TC-UI-001 в Wiki не совпадает с реальными названиями элементов. UI-001 |
+| UI | Stats Dashboard | Orders/Basket Units после PLACE ORDER | Passed | Orders +1, Basket Units = 0 | — | UI-002 |
+| UI | Stats Dashboard | Inventory Value не зависит от корзины | Passed | Значение не меняется после очистки корзины | — | UI-003 |
+| UI | Products | Фильтр по категории в сайдбаре | Passed | Показаны только товары выбранной категории | — | |
+| UI | Products | Сортировка Z→A | Passed | Список переворачивается | — | |
+| UI | Products | Карточка товара содержит все поля | Passed | Иконка, название, категория, цена, temperature zone, stock | — | |
+| UI | Products | Reset восстанавливает удалённые товары | Passed (функция) / Failed (расположение) | Кнопка в верхней навигации | BUG-UI-02 | Реально находится в Data Viewer |
+| UI | Products | Создание товара — обязательные поля | Passed | Товар создаётся, отображается в каталоге | — | UI-006 |
+| UI | Products | Создание товара — пустое Product Name | Passed | Сообщение "пожалуйста заполните это поле" | — | |
+| UI | Products | Создание товара — price = 0 | **Failed** | Ошибка или создание товара | BUG-UI-04 | Факт: тихий отказ без сообщения |
+| UI | Products | Создание товара — price = -4 | Passed | Валидационное сообщение, отправка блокируется | — | UI-008. См. примечание к BUG-001: не отменяет проблему на уровне API |
+| UI | Products | Категория — только dropdown с дефолтными значениями | Passed / уточнить | — | — | UI-009. API поддерживает свободный текст, UI — нет |
+| UI | Products | Поле Details (key/value) | Passed | Поле присутствует и работает | — | |
+| UI | Products | Изменение price/stock обновляет Inventory Value | Passed | Значение пересчитывается | — | |
+| UI | Products | Создание товара с stock = 0 | Passed | Отображается бейдж "⚠️ Out of Stock" | — | |
+| UI | Basket | Степпер количества обновляет subtotal | Passed | Мгновенное обновление суммы | — | UI-010 |
+| UI | Basket | Пустая корзина — текст сообщения | **Failed** | "Start marketing!" | BUG-UI-03 | Факт: опечатка "marketping" |
+| UI | Basket | REMOVE удаляет только выбранный товар | Passed | Остальные товары не затронуты | — | |
+| UI | Basket | PLACE ORDER отсутствует при пустой корзине | Passed | Кнопка не отображается | — | UI-011 |
+| UI | Basket | Order Summary = сумма subtotal всех позиций | Passed | Итог совпадает с расчётным | — | |
+| UI | Basket | Нельзя превысить quantity сверх stock | Passed | Степпер блокируется на максимуме stock | — | |
+| UI | Basket | Повторное добавление товара объединяет quantity | Passed | Совпадает с поведением API (BASK-002) | — | |
+| UI | Orders | Формат order_number (O + 5 цифр) | Passed | Совпадает с `/^O\d{5}$/` | — | |
+| UI | Orders | Цвет бейджа статуса (pending/delivered/cancelled) | Passed | Жёлтый/зелёный/красный | — | |
+| UI | Orders | Смена статуса недоступна после DELIVERED | Passed (UI) | Элементы управления заблокированы | — | |
+| UI | Orders | Строка позиции заказа (название × qty — subtotal) | Passed | Формат соответствует ожидаемому | — | |
+| UI | Orders | Таймстамп заказа близок к реальному времени | Passed | Расхождение в пределах нескольких секунд | — | |
+| UI | Orders | DELETE ORDER удаляет заказ и уменьшает счётчик | Passed | Заказ пропадает, Orders → 0 | — | UI-013 |
+| UI | Orders | Корзина очищается автоматически после заказа | Passed | Пустое состояние, Basket Units = 0 | — | |
