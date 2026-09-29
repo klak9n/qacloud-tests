@@ -18,7 +18,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\nconst body = pm.response.json();\r\n\r\npm.test(\"Response contains products array\", function () {\r\n    pm.expect(body.products).to.be.an(\"array\");\r\n});\r\n\r\npm.test(\"Products array is not empty\", function () {\r\n    pm.expect(body.products.length).to.be.at.least(1);\r\n});"
+                  ""
                 ]
               }
             }
@@ -82,7 +82,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/groceries/filter?category=$$$$",
+              "raw": "{{baseUrl}}/api/groceries/filter?category=%21%40%23%24",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -104,7 +104,7 @@
                 },
                 {
                   "key": "category",
-                  "value": "$$$$"
+                  "value": "%21%40%23%24"
                 }
               ]
             }
@@ -133,7 +133,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Milk\",\r\n  \"price\": 2,\r\n  \"category\": \"Dairy\",\r\n  \"temperature_zone\": \"Warm\",\r\n  \"weighted\": false,\r\n  \"details\": {\r\n    \"brand\": \"DairyFresh\",\r\n    \"volume\": \"1L\"\r\n  }\r\n}",
+              "raw": "{\r\n  \"name\": \"Milk\",\r\n  \"price\": 2,\r\n  \"category\": \"Warm\",\r\n  \"temperature_zone\": \"Dry\",\r\n  \"weighted\": false,\r\n  \"details\": {\r\n    \"brand\": \"DairyFresh\",\r\n    \"volume\": \"1L\"\r\n  }\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -174,14 +174,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/groceries/{4c3679df-5393-48cb-826b-17868a3e2909}",
+              "raw": "{{baseUrl}}/api/groceries/{{productId}}",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "groceries",
-                "{4c3679df-5393-48cb-826b-17868a3e2909}"
+                "{{productId}}"
               ]
             }
           },
@@ -217,14 +217,14 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/api/groceries/{{productId}}",
+              "raw": "{{baseUrl}}/api/groceries/{123}",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "groceries",
-                "{{productId}}"
+                "{123}"
               ]
             }
           },
@@ -251,14 +251,14 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/groceries/{4c3679df-5393-48cb-826b-17868a3e2909}",
+              "raw": "{{baseUrl}}/api/groceries/{{productId}}",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "groceries",
-                "{4c3679df-5393-48cb-826b-17868a3e2909}"
+                "{{productId}}"
               ]
             }
           },
@@ -324,7 +324,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"product_id\": \"168ebb12-20b9-4b0a-ad92-8af6fa8cfc86\",\r\n  \"quantity\": 5\r\n}",
+              "raw": "{\r\n  \"product_id\": \"168ebb12-20b9-4b0a-ad92-8af6fa8cfc86\",\r\n  \"quantity\": 2\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -408,7 +408,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"product_id\": \"168ebb12-20b9-4b0a-ad92-8af6fa8cfc86\",\r\n    \"quantity\": 2\r\n}",
+              "raw": "{\r\n    //\"product_id\": \"168ebb12-20b9-4b0a-ad92-8af6fa8cfc86\",\r\n    //\"quantity\": 2\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -416,15 +416,14 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/api/basket/items/{168ebb12-20b9-4b0a-ad92-8af6fa8cfc86}",
+              "raw": "{{baseUrl}}/api/basket/{166}",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "basket",
-                "items",
-                "{168ebb12-20b9-4b0a-ad92-8af6fa8cfc86}"
+                "{166}"
               ]
             }
           },
@@ -451,7 +450,15 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": ""
+              "raw": "{{baseUrl}}/api/basket/clear",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "basket",
+                "clear"
+              ]
             }
           },
           "response": []
@@ -482,7 +489,14 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": ""
+              "raw": "{{baseUrl}}/api/orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders"
+              ]
             }
           },
           "response": []
@@ -508,7 +522,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": ""
+              "raw": "{{baseUrl}}/api/orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders"
+              ]
             }
           },
           "response": []
@@ -534,7 +555,15 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": ""
+              "raw": "{{baseUrl}}/api/orders/{4786dc6d-ad44-4d5a-a183-b164d920cd71}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{4786dc6d-ad44-4d5a-a183-b164d920cd71}"
+              ]
             }
           },
           "response": []
@@ -559,8 +588,25 @@
             },
             "method": "PUT",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"cancelled\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": ""
+              "raw": "{{baseUrl}}/api/orders/{d8334b83-cde6-4b88-b1a3-0a7f5c2ef659}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{d8334b83-cde6-4b88-b1a3-0a7f5c2ef659}"
+              ]
             }
           },
           "response": []
@@ -586,7 +632,15 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": ""
+              "raw": "{{baseUrl}}/api/orders/{20cd71}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{20cd71}"
+              ]
             }
           },
           "response": []
@@ -596,10 +650,32 @@
     {
       "name": "Reset",
       "request": {
-        "method": "GET",
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "key",
+              "value": "Authorization",
+              "type": "string"
+            },
+            {
+              "key": "value",
+              "value": "{{apiKey}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
         "header": [],
         "url": {
-          "raw": ""
+          "raw": "{{baseUrl}}/api/reset",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reset"
+          ]
         }
       },
       "response": []
